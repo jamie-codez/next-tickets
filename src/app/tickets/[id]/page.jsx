@@ -21,7 +21,6 @@ const TicketPage = async ({ params }) => {
     const { id } = params;
     const editMode = id === "new" ? false : true;
     const ticket = editMode ? await getTicket(id) : null;
-    console.log(ticket)
 
     return (
         <div className='flex justify-center mx-auto'>

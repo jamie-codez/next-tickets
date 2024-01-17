@@ -14,9 +14,10 @@ const TicketForm = ({ ticket }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         console.log({ ...formData })
-        const response = await fetch("/api/tickets", {
-            method: "POST",
+        const response = await fetch(`${ticket ? `/api/tickets/${ticket._id}` : "/api/tickets"}`, {
+            method: `${ticket ? "PUT" : "POST"}`,
             body: JSON.stringify({ formData }),
             headers: {
                 "content-type": "application/json"
@@ -27,8 +28,7 @@ const TicketForm = ({ ticket }) => {
             toast.error(`Failed to create Ticket.\n${response.message}`);
             throw new Error("Failed to create Ticket.")
         }
-
-        toast.success("Ticket created successfully!");
+        toast.success(`${ticket ? "Updated" : "Created"} Ticket successfully!`);
         router.push("/");
         router.refresh()
     }
@@ -88,7 +88,7 @@ const TicketForm = ({ ticket }) => {
                     <option value={true}>Active</option>
                     <option value={false}>Inactive</option>
                 </select> : null}
-                <input type='submit' className='btn' value={"Create Ticket"} />
+                <input type='submit' className='btn' value={`${ticket ? "Update Ticket" : "Create Ticket"}`} />
             </form>
         </div>
     )
